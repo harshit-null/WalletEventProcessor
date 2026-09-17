@@ -163,8 +163,8 @@ Multiple approaches to get H2 console working at `/h2-console`:
 
 **Why It Didn't Work**:
 - Spent significant time on a **compatibility issue** between:
-  - H2 library using `javax.servlet.*` (Java EE)
-  - Spring Boot 6.x using `jakarta.servlet.*` (Jakarta EE)
+    - H2 library using `javax.servlet.*` (Java EE)
+    - Spring Boot 6.x using `jakarta.servlet.*` (Jakarta EE)
 - These are fundamentally incompatible; no configuration can fix it
 - Should have **recognized the root cause faster** and pivoted to alternatives
 
@@ -181,16 +181,16 @@ Multiple approaches to get H2 console working at `/h2-console`:
 
 **What Happened**:
 1. Created `GlobalExceptionHandler` that catches custom exceptions like `DuplicateTransactionException`
-2. Updated service to throw `DuplicateTransactionException` 
+2. Updated service to throw `DuplicateTransactionException`
 3. Tests were still catching generic `IllegalStateException`
 4. Tests failed until exception types were synchronized
 
 **Why This Was Suboptimal**:
 - Should have updated test exception handlers **in the same commit** as service changes
 - Better approach: Test-Driven Development (TDD)
-  - Write tests first with expected exception types
-  - Then implement service with matching exceptions
-  - Then create global exception handler
+    - Write tests first with expected exception types
+    - Then implement service with matching exceptions
+    - Then create global exception handler
 
 **Lesson Learned**:
 - When refactoring exception hierarchy, update all layers simultaneously
